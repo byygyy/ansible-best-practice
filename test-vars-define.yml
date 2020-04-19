@@ -1,0 +1,63 @@
+---
+
+- hosts: "{{ hosts_group }}"
+  remote_user: vagrant
+  vars:
+    name1: robi
+    hosts_group: "localhost"
+    date1: 2020-02-02
+    age1: 21
+    age2: '21'
+    married: True
+    married2: true
+    married3: 'true'
+    names2: [robin,joseph]
+    log1: 'hello\nworld\nihao\nzhongguo'
+    userss: []
+
+  tasks:
+    - name: define a var1
+      shell: "whoami"
+      register: whoami
+
+    - debug:
+        msg: "whoami: {{ whoami }}"
+    
+    - debug:
+        msg: "whoami.stdout: {{whoami.stdout}}"
+
+    - name: define users in a loop
+      shell: "grep {{ item }} /etc/passwd|cat"
+      register: users
+      with_items:
+        - vagrant
+        - root
+        - nginx
+    
+    - name: show users
+      debug:
+        msg: "{{ users }}"
+
+    - name: show users.results
+      debug:
+        msg: "{{ users.results }}"
+
+    - name: define userss by set_fact
+      set_fact: 
+        userss: "{{userss +item.stdout_lines}}"
+      with_list: "{{ users.results }}"
+
+    - name: print userss
+      debug:
+        msg: "{{ userss }}"
+    
+    - name: print userss one by one
+      debug:
+        msg: "{{ item }}"
+      with_list: "{{ userss}}"
+
+    - name: print part of userss one by one
+      debug:
+        msg: "{{ item.split(':')[6] }}"
+      with_list: "{{ userss}}"
+
