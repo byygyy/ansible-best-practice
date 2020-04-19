@@ -23,9 +23,6 @@
      with_lines: "{{ workspaces }}"
      register: listOfInstance
    
-   - debug:
-       msg: "{{ listOfInstance.results }}"  
- 
    - name: define listOfInstances to fact
      set_fact:
        listOfInstances: "{{listOfInstances +item.stdout_lines}}"
