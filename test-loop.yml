@@ -1,52 +1,56 @@
 ---
 
 - hosts: "{{ hosts_group }}"
-  remote_user: vagrant
+  remote_user: root
   vars:
-    caasname: xxx
-    listOfInstances: []
-  
+    name1: robin
+    hosts_group: "localhost"
+    date1: 2020-02-02
+    age1: 21
+    age2: '21'
+    married: True
+    married2: true
+    married3: 'true'
+    names2: [robin,joseph]
+    workspaces: [appvol,appvol02]
+    info1: [ {"workspace":appvol,"instance":JBD1} ]
+    info2: [ {"workspace":appvol02,"instance":JBD2} ]
+    log1: 'hello\nworld\nihao\nzhongguo'
+
   tasks:
-   - name: get the workspaces
-     shell: "ls /|grep appvol|cat" 
-     register: workspaces
+    - name: get the workspaces
+      shell: "df -h|grep -v Mounted|awk '{print $6}'"
+      args:
+        chdir: /apps/ansible-test/
+      register: workss
     
-   - name: define workspaces to fact
-     set_fact:
-       workspaces: "echo -en '{{ workspaces.stdout }}'"
-    
-   - debug:
-       msg: "{{ workspaces }}"
-
-   - name: get the listOfInstance
-     shell: "cat /{{ item }}/t360/listOfInstance|awk -F '=' '{print \"{{item}}\", $2}'"
-     with_lines: "{{ workspaces }}"
-     register: listOfInstance
+    - name: register vars
+      set_fact:
+        my_lists: []
    
-   - debug:
-       msg: "{{ listOfInstance.results }}"  
  
-   - name: define listOfInstances to fact
-     set_fact:
-       listOfInstances: "{{listOfInstances +item.stdout_lines}}"
-     with_list: "{{ listOfInstance.results }}"
-   
-   - name: show the listOfInstances
-     debug:
-      msg: "{{item}}"
-     with_list: "{{ listOfInstances }}"
+    - name: register vars with workss name
+      set_fact:
+         my_lists: "{{ my_lists + [ item] }}"
+      with_lines: "echo -en '{{workss.stdout}}'"
+       
+    - debug:
+       msg: "{{ my_lists }}"    
+    
+    - name: get the instance name from every workss
+      shell: "ls {{ item }}"
+      register: instances
+      with_items: "{{ my_lists }}"
 
-   - name: do some configuration by lineinfile
-     lineinfile:
-       path: "/{{item.split()[0]}}/t360/{{item.split()[1]}}/tps.properties"
-       state: present
-       regexp: "^caasname="
-       line: "caasname={{ caasname }}"
-       backup: no
-       backrefs: yes
-     with_list: "{{ listOfInstances }}"
+    - name: echo instances
+      debug:
+        msg: "{{ item.item }} {{ item.stdout }}"
+      with_items: "{{ instances.results }}"
 
-   - name: show the deployment scripts
-     debug:
-       msg:  "/{{item.split()[0]}}/t360/deploy --instanceName={{item.split()[1]}}"
-     with_list: "{{ listOfInstances }}" 
+    #- name: merge 2 lists
+    #  set_fact:
+    #    my_lists: "{{ my_lists +  info1 + info2 }}"
+    
+    #- debug:
+    #    msg: "{{ item }}"
+    #  with_items: "{{ my_lists }}"

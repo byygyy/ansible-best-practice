@@ -1,0 +1,25 @@
+---
+
+- hosts: "{{ hosts_group }}"
+  become: yes
+  become_method: sudo
+  become_user: root  
+
+  vars:
+    ansible_ssh_user: robin
+    name1: root
+    hosts_group: "gcp"
+    date1: 2020-02-02
+    age1: 21
+    age2: '21'
+    married: True
+    married2: true
+    married3: 'true'
+    path: '$PATH'
+
+  tasks:
+     - name: Template a file to /etc/files.conf
+       template:
+         src: foo.j2
+         dest: /tmp/file.conf
+         mode: '0644'

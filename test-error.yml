@@ -1,0 +1,44 @@
+---
+
+- hosts: "{{ hosts_group }}" 
+  vars:
+    name1: robin
+    hosts_group: "robin.org.cn"
+    date1: 2020-02-02
+    age1: 21
+    age2: '21'
+
+  tasks:
+    - name: Check the weblogic without wc
+      shell: "ps -ef|grep weblogic|grep -v grep"
+      register: check_weblogic0
+      ignore_errors: true
+
+    - name: print the check_weblogic1
+      debug:
+        msg: "{{ check_weblogic0 }}"
+
+    - name: Check the weblogic without wc but use cat
+      shell: "ps -ef|grep weblogic|grep -v grep|cat"
+      register: check_weblogic1
+      ignore_errors: true
+
+    - name: print the check_weblogic1
+      debug:
+        msg: "{{ check_weblogic1 }}"
+
+
+    - name: Check the weblogic with wc
+      shell: "ps -ef|grep weblogic|grep -v grep|wc -l|cat"
+      register: check_weblogic2
+      ignore_errors: true
+
+    - name: print the check_weblogic2
+      debug:
+        msg: "{{ check_weblogic2.stdout|int }}"
+
+    - name: print the result if one
+      debug:
+        msg: "hello world"
+      when: "check_weblogic2.stdout|string == '0'"
+
