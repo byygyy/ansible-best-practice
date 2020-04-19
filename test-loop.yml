@@ -8,7 +8,7 @@
   
   tasks:
    - name: get the workspaces
-     shell: "ls /|grep appvol" 
+     shell: "ls /|grep appvol|cat" 
      register: workspaces
     
    - name: define workspaces to fact
