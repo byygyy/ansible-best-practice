@@ -18,6 +18,18 @@
     instances: ["instance1","instance2"]
 
   tasks:
+    - name: loop with multiple list
+      shell: "echo {{ item[0].name }}"
+      with_nested:
+        -
+         - {'name':robin,'age':18}
+         - {'name':lily,'age':18}
+         - {'name':gil,'age':18}
+        -
+         - "appvol JBD1"
+         - "appvol02 JBD2"
+         
+
     - name: define a lable for loop
       shell: "echo {{ item }}"
       with_items:
