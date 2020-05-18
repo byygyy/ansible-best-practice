@@ -1,0 +1,20 @@
+---
+
+- hosts: "{{ hosts_group }}"
+  remote_user: root
+  vars:
+    name1: robin
+    hosts_group: "localhost"
+    env_name: abc
+
+  tasks:
+    - set_fact:
+        env_name: 'china'
+      when: ex_env_name=='zhonguo'
+
+    - set_fact:
+        env_name: 'china'
+      when: ex_env_name=='cn'
+
+    - debug:
+        msg: "{{ env_name }}"
