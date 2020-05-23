@@ -1,3 +1,0 @@
-SELINUX=enforcing
-world
-hello

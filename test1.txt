@@ -1,1 +1,0 @@
- <class-path>hello:world:cct:china</class-path>
