@@ -3,25 +3,23 @@
 - hosts: "{{ hosts_group }}"
   remote_user: root
   vars:
-    name1: robin
     hosts_group: "localhost"
-    env_name: abc
 
   tasks:
     - set_fact:
         env_name: 'china'
-      when: ex_env_name=='zhonguo'
+      when: env_name_alias=='zhonguo'
 
     - set_fact:
         env_name: 'china'
-      when: ex_env_name=='cn'
+      when: env_name_alias=='cn'
 
     - set_fact:
-        env_name: "{{ ex_env_name }}"
-      when: ex_env_name not in ['zhonguo','cn']
+        env_name: "{{ env_name_alias }}"
+      when: env_name_alias not in ['zhonguo','cn']
     
     - debug:
         msg: "env_name is {{ env_name }}"
     
     - debug:
-        msg: "ex_env_name is {{ ex_env_name }}"
+        msg: "env_name_alias is {{ env_name_alias }}"
