@@ -16,5 +16,12 @@
         env_name: 'china'
       when: ex_env_name=='cn'
 
+    - set_fact:
+        env_name: "{{ ex_env_name }}"
+      when: ex_env_name not in ['zhonguo','cn']
+    
     - debug:
-        msg: "{{ env_name }}"
+        msg: "env_name is {{ env_name }}"
+    
+    - debug:
+        msg: "ex_env_name is {{ ex_env_name }}"
