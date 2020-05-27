@@ -1,0 +1,23 @@
+---
+
+- hosts: "{{ hosts_group }}"
+  remote_user: root
+
+  tasks:
+    - set_fact:
+        env_name: 'china'
+      when: env_name_alias=='zhonguo'
+
+    - set_fact:
+        env_name: 'china'
+      when: env_name_alias=='cn'
+
+    - set_fact:
+        env_name: "{{ env_name_alias }}"
+      when: env_name_alias not in ['zhonguo','cn']
+    
+    - debug:
+        msg: "env_name is {{ env_name }}"
+    
+    - debug:
+        msg: "env_name_alias is {{ env_name_alias }}"
