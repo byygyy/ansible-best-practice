@@ -4,6 +4,7 @@
   remote_user: root
   vars:
     hosts_group: "all"
+    ansible_password: EKfsAD&FW($-Pl&zM-VQJ-Akhty88%yX
 
 
   tasks:
