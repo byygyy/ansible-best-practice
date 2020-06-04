@@ -3,7 +3,6 @@
 - hosts: "{{ hosts_group }}"
   remote_user: root
   vars:
-    hosts_group: "localhost"
     env_name_alias: cn
 
   roles:
@@ -11,3 +10,19 @@
 
 - name: include the playbook
   import_playbook: ansible-include-subplay.yml
+
+- hosts: "{{ hosts_group }}"
+  remote_user: root
+  vars:
+    hosts_group: ''
+    name1: ''
+    age1: ''
+
+  tasks:
+    - name: show the name1 2st
+      debug:
+        msg: "{{ name1 }}"
+
+    - name: show the age1 2st
+      debug:
+        msg: "{{ age1 }}"

@@ -3,8 +3,9 @@
 - hosts: "{{ hosts_group }}"
   remote_user: root
   vars:
-    name1: robin
-    hosts_group: "localhost"
+    hosts_group: ''
+    name1: ''
+    age1: ''
 
   tasks:
     - name: show the name1
