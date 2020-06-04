@@ -1,1 +1,1 @@
-ansible-playbook site.yml -e "hosts_group=localhost"
+ansible-playbook sit_xx.yml -e "hosts_group=localhost"
