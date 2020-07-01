@@ -12,7 +12,7 @@
 
   tasks:
     - name: run a shell command
-      shell: "sleep 2;echo 'hello world';sleep 3;echo 'nihao zhongguo';exit 1"
+      shell: "sleep 2;echo 'hello world';sleep 3;echo 'nihao zhongguo';exit 1;sleep 100"
       async: 50
       poll: 5
       register: rst1
@@ -23,7 +23,7 @@
         msg: "{{ rst1 }}"
 
     - name: run a shell command2
-      shell: "sleep 2;echo 'hello world';sleep 3;echo 'nihao zhongguo';exit 0"
+      shell: "sleep 2;echo 'hello world';sleep 3;echo 'nihao zhongguo';exit 0;sleep 100"
       async: 50
       poll: 5
       register: rst2

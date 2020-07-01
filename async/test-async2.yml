@@ -12,7 +12,7 @@
 
   tasks:
     - name: run a shell command1
-      shell: "sleep 2;echo 'hello world';sleep 3;echo 'nihao zhongguo';exit 1"
+      shell: "sleep 2;echo 'hello world';sleep 3;echo 'nihao zhongguo';exit 1;sleep 200"
       async: 50
       poll: 0
       register: rst1
@@ -25,7 +25,7 @@
       async_status: jid={{ rst1.ansible_job_id }}
       register: job_result
       until: job_result.finished
-      retries: 30
+      retries: 50
       ignore_errors: true
 
     - name: echo the job_result
