@@ -1,9 +1,9 @@
 ---
 
 - hosts: "{{ hosts_group }}"
-  remote_user: root
+  remote_user: robin
   vars:
-    hosts_group: ''
+    hosts_group: 'localhost'
     name1: ''
     age1: ''
 

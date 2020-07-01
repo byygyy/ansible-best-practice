@@ -9,9 +9,6 @@
     ansible_ssh_user: robin
 
   tasks:
-    - name: source bash_profile
-      shell: source ~/.bash_profile
-
     - name: use play default become parameter, run whoami and register to shell_result1
       shell: whoami&&echo $PATH
       register: shell_result1

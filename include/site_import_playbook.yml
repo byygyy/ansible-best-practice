@@ -1,9 +1,10 @@
 ---
 
 - hosts: "{{ hosts_group }}"
-  remote_user: root
+  remote_user: robin
   vars:
     env_name_alias: cn
+    hosts_group: localhost
 
   roles:
     - ansible-include
