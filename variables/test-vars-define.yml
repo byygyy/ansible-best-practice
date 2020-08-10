@@ -84,3 +84,8 @@
       debug:
         msg: "user3 is {{ user3 }}"
       when: user3 is defined and user3!=None and user3==''
+    
+    - name: show user4 which did not defined
+      debug:
+        msg: "user4 is not defined"
+      when: user4 is not defined
