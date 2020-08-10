@@ -3,7 +3,7 @@
 - hosts: "{{ hosts_group }}"
   remote_user: vagrant
   vars:
-    name1: robi
+    name1: robin
     hosts_group: "localhost"
     date1: 2020-02-02
     age1: 21
@@ -14,6 +14,15 @@
     names2: [robin,joseph]
     log1: 'hello\nworld\nihao\nzhongguo'
     userss: []
+
+    #user1 is defined and user1==None
+    user1:
+    
+    #user2 is defined and user2!=None and user2!=''
+    user2: jason
+    
+    #user3 is defined and user3==''
+    user3: ''
 
   tasks:
     - name: define a var1
@@ -61,3 +70,17 @@
         msg: "{{ item.split(':')[6] }}"
       with_list: "{{ userss}}"
 
+    - name: show user1 defined but is None
+      debug:
+        msg: "user1 is {{ user1 }}"
+      when: user1 is defined and user1==None and user1!=''
+   
+    - name: show user2 defined and is not None and it is string
+      debug:
+        msg: "user2 is {{ user2 }}"
+      when: user2 is defined and user2!=None and user2!=''
+    
+    - name: show user3 defined and is not None but it is empty sting
+      debug:
+        msg: "user3 is {{ user3 }}"
+      when: user3 is defined and user3!=None and user3==''
