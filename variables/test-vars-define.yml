@@ -14,6 +14,7 @@
     names2: [robin,joseph]
     log1: 'hello\nworld\nihao\nzhongguo'
     userss: []
+    dict1: {"paramters":[{"name":robin,"age":22},{"name":tom,"age":21}]}
 
     #user1 is defined and user1==None
     user1:
@@ -25,6 +26,9 @@
     user3: ''
 
   tasks:
+    - debug:
+        msg: "{{ dict1 }}"
+ 
     - name: define a var1
       shell: "whoami"
       register: whoami
