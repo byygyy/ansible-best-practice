@@ -8,18 +8,37 @@
   vars:
     ansible_ssh_user: robin
     name1: root
-    hosts_group: "gcp"
-    date1: 2020-02-02
+    name2: robin
+    hosts_group: "localhost"
     age1: 21
     age2: '21'
-    married: True
-    married2: true
-    married3: 'true'
-    path: '$PATH'
+    list1: {"parameter": [{"name":"root","age":"22","post":"710000","worker":"BTP01"},{"name":"robin","age":"21","post":"720000","worker":"BTP02"}]}
 
   tasks:
-     - name: Template a file to /etc/files.conf
+     - name: Template a file to /tmp/files.conf
        template:
          src: foo.j2
-         dest: /tmp/file.conf
+         dest: "./files.conf"
          mode: '0644'
+
+     - name: Template different file to /tmp/name/files.conf
+       template:
+         src: foo.j2
+         dest: "./{{ item.name }}/files.conf"
+         mode: '0644'
+       with_items: "{{ list1.parameter }}"
+     
+     - name: change post by loop
+       lineinfile:
+        path: "./{{ item.name }}/files.conf"
+        regexp: '^post='
+        line: "post={{ item.post }}"
+       with_items: "{{ list1.parameter }}"
+
+     - name: change worker by loop
+       lineinfile:
+        path: "./{{ item.name }}/files.conf"
+        regexp: '^worker='
+        line: "worker={{ item.worker }}"
+       with_items: "{{ list1.parameter }}"
+
