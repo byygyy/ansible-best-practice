@@ -1,0 +1,30 @@
+---
+
+- hosts: "{{ hosts_group }}"
+  remote_user: root
+  vars:
+    hosts_group: "localhost"
+    env_name_alias: "cn"
+  tasks:
+    - name: call py got result
+      shell: "python get.py"
+      register: "get_res1"
+
+    - debug:
+        msg: "{{ get_res1 }}"
+
+
+- hosts: "{{ hosts_group }}"
+  remote_user: robin
+  vars:
+    hosts_group: "lhh.pub"
+    env_name_alias: "cn"
+  tasks:
+    - name: call py got result
+      shell: "python get.py"
+      register: "get_res1"
+      connection: local
+
+    - debug:
+        msg: "{{ get_res1 }}"
+
